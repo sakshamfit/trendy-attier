@@ -1,10 +1,32 @@
-# trendy attiere
+# trendy attire
 
-Single-page landing site for **Trendy Attiere**, a fictional monochrome fashion brand — "considered
-essentials in monochrome. Outerwear, knitwear and tailoring, made in limited runs."
+Single-page landing site for **Trendy Attire**, a men's clothing store in Pharenda, Uttar
+Pradesh, wearing a monochrome editorial identity — "considered essentials in monochrome.
+Outerwear, knitwear and tailoring, made in limited runs."
 
 Editorial layout, bone/black palette, Archivo only, grayscale photography, and one
 scroll-driven motion system. No build step, no framework.
+
+## Business facts
+
+The Google listing is the source of truth and is encoded twice — visibly, and in the
+`application/ld+json` block in `<head>`:
+
+| Field | Value |
+| --- | --- |
+| Name | Trendy Attire (rendered uppercase, as on the listing) |
+| Category | Men's clothing store |
+| Address | Behind Ambedkar Tirha, Anand Nagar, Pharenda, Uttar Pradesh 273155 |
+| Phone | +91 70719 60434 · +91 74284 12394 (`tel:` links, footer + newsletter) |
+| Rating | 5.0, 6 Google reviews — the atelier count-ups and the footer badge |
+
+Deliberately **not** invented: opening hours and a website (both absent from the listing — the
+footer says "call before you travel"), a GSTIN ("on request"), and `geo`/`sameAs` fields.
+Currency, pricing (₹), delivery, 7-day exchange, alterations and UPI/card payment are localised
+copy, not listing data — **confirm before this goes live.**
+
+Maps links use the clean Maps URL API (`maps/dir`, `maps/search`) rather than the tracking-laden
+`sca_esv`/`ved` URLs, and `lang="en-IN"` + `og:locale=en_IN` are set.
 
 ## Run it
 
@@ -22,7 +44,7 @@ and the brand's imagery from jsDelivr.
 | Piece | Note |
 | --- | --- |
 | HTML | one file: `index.html` — markup, styles and behaviour |
-| Identity | wordmark set as two stacked lines (Trendy / Attiere); inline SVG favicon, no image asset |
+| Identity | wordmark as two stacked lines (Trendy / Attire); inline SVG favicon; `ClothingStore` JSON-LD |
 | CSS | custom properties + `clamp()`; Tailwind via CDN, `preflight` disabled so it cannot fight the authored CSS |
 | JS | vanilla, no libraries |
 | Type | Archivo 400–900 |
