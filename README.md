@@ -1,6 +1,6 @@
-# trendy attire
+# trendy attiere
 
-Single-page landing site for **Trendy Attire**, a fictional monochrome fashion brand — "considered
+Single-page landing site for **Trendy Attiere**, a fictional monochrome fashion brand — "considered
 essentials in monochrome. Outerwear, knitwear and tailoring, made in limited runs."
 
 Editorial layout, bone/black palette, Archivo only, grayscale photography, and one
@@ -22,7 +22,7 @@ and the brand's imagery from jsDelivr.
 | Piece | Note |
 | --- | --- |
 | HTML | one file: `index.html` — markup, styles and behaviour |
-| Identity | wordmark set as two stacked lines (Trendy / Attire); inline SVG favicon, no image asset |
+| Identity | wordmark set as two stacked lines (Trendy / Attiere); inline SVG favicon, no image asset |
 | CSS | custom properties + `clamp()`; Tailwind via CDN, `preflight` disabled so it cannot fight the authored CSS |
 | JS | vanilla, no libraries |
 | Type | Archivo 400–900 |
@@ -40,9 +40,8 @@ and the brand's imagery from jsDelivr.
 Ticker → sticky nav → `#hero` → `#cats` → `#season` → `#svc` → `#shop` → `#look`
 → `#cloth` → `#atelier` → `#signup` → footer.
 
-The hero wordmark — `Trendy` over `Attire`, both six letters, so the block stays square — sits
-**behind** the transparent model cutout (z-1 vs z-2) so the letters read through the gaps in
-the silhouette; the corner labels (z-4) are anchored to the padded
+The hero wordmark stacks as `Trendy` over `Attiere` and sits **behind** the transparent model
+cutout (z-1 vs z-2), so the letters read through the gaps in the silhouette; the corner labels (z-4) are anchored to the padded
 content column, not the viewport edge.
 
 ## Motion system
