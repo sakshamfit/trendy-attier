@@ -1,97 +1,96 @@
-# trendy attire
+# Trendy Attire — React + JS · Mobile Responsive
 
-Single-page landing site for **Trendy Attire**, a men's clothing store in Pharenda, Uttar
-Pradesh, wearing a monochrome editorial identity — "considered essentials in monochrome.
-Outerwear, knitwear and tailoring, made in limited runs."
+Single-page landing for **Trendy Attire**, a men's clothing store in Pharenda, Uttar Pradesh — now rebuilt in **React + JavaScript (Vite)** with a mobile-first, fully button-responsive system.
 
-Editorial layout, bone/black palette, Archivo only, grayscale photography, and one
-scroll-driven motion system. No build step, no framework.
+> “Considered essentials in monochrome. Outerwear, knitwear and tailoring, made in limited runs.”  
+> Bone `#EFEDE8` / Ink `#101010`, Archivo 400–900, grayscale imagery, editorial grid.
 
-## Business facts
+![React](https://img.shields.io/badge/React-19-61DAFB) ![Vite](https://img.shields.io/badge/Vite-8-646CFF) ![Mobile](https://img.shields.io/badge/mobile-responsive-100%25-brightgreen)
 
-The Google listing is the source of truth and is encoded twice — visibly, and in the
-`application/ld+json` block in `<head>`:
+---
+
+## ✨ What changed — React + mobile + buttons
+
+**Stack migrated from vanilla `index.html` → Vite + React (JS, no TypeScript):**
+
+- `index.html` → `src/App.jsx` + 10 components (`Navbar`, `Hero`, `Categories`, `Season`, `Services`, `Shop`, `Lookbook`, `Cloth`, `Atelier`, `Newsletter`, `Footer`)
+- State via React hooks: bag drawer, favourites (`aria-pressed`), newsletter validation, toast live region, parallax/reveal loop
+- Single `requestAnimationFrame` scroll loop preserved (progress, `data-speed` parallax, `data-scrub` clip, `.rv` reveals) — now inside `useEffect`
+
+**Mobile responsive (320 → 1440):**
+
+- **Nav:** desktop 3-col grid → ≤900px hamburger + slide drawer (88vw, 52px rows, safe-area aware). Sticky, backdrop-blur, `env(safe-area-inset-*)` gutters.
+- **Hero:** `clamp()` type scales 42px at 320px → 236px desktop; stage 300–720px; CTA stacks to full-width on ≤640px, corner labels shrink to 9.5px.
+- **Categories:** 3 → 2 → 1 col; Season split 2-col → stacked (image on top); Services 4 → 2 → 1 col; Shop 4 → 2 → 1 col (360px breakpoint); Lookbook 12-col → stacked; Cloth & Atelier 2-col → 1-col; Footer 4 → 2 → 1 col.
+- Fluid tokens: `--gut: clamp(18px,4.2vw,44px)`, `--pad-y: clamp(48px,8vw,112px)`, `--nav-h: 74px → 96px`, `scroll-margin-top`, `scrollbar-gutter: stable`.
+
+**All buttons responsive (44px + clamp + tactile):**
+
+- Global `.btn` — `min-height:44px`, `min-width:44px`, `padding: clamp(18px,4vw,28px)`, `font-size: clamp(10px,2.6vw,11px)`, `letter-spacing:.18em`, `transform: scale(.97)` on `:active`, `@media (hover:none)` fallbacks, full-width at `≤640px` (`.btn--auto-mobile` to keep auto), variants `.btn--sm` (40px) / `.btn--lg` (52px) / `.btn--ghost` / `.btn--block`.
+- `.tlink` — 44px border-bottom link, arrow shifts on hover, `scale(.98)` on press
+- `.fav` — 44×44 circle, `aria-pressed` fill, `scale(.92)` press, `backdrop-filter`
+- `.add` — 44px absolute bar, hidden on hover-capable until hover/focus, always visible on touch (`@media (hover:none)`), `Added ✓` state
+- `.icon-btn` / `.bag` / `.burger` — 44×44, `border:1.5px`, `touch-action: manipulation`, `-webkit-tap-highlight-color: transparent`
+- **Touch polish:** `16px` input (no iOS zoom), `44px` footer links + foot-bar, `env(safe-area-inset-bottom)` for drawers/toast, `prefers-reduced-motion` disables all motion, `focus-visible` outlines, `user-select:none` on buttons only.
+
+---
+
+## Business facts (source: Google listing)
 
 | Field | Value |
-| --- | --- |
-| Name | Trendy Attire (rendered uppercase, as on the listing) |
+|---|---|
+| Name | Trendy Attire |
 | Category | Men's clothing store |
 | Address | Behind Ambedkar Tirha, Anand Nagar, Pharenda, Uttar Pradesh 273155 |
-| Phone | +91 70719 60434 · +91 74284 12394 (`tel:` links, footer + newsletter) |
-| Rating | 5.0, 6 Google reviews — the atelier count-ups and the footer badge |
+| Phone | +91 70719 60434 · +91 74284 12394 |
+| Rating | 5.0, 6 Google reviews |
 
-Deliberately **not** invented: opening hours and a website (both absent from the listing — the
-footer says "call before you travel"), a GSTIN ("on request"), and `geo`/`sameAs` fields.
-Currency, pricing (₹), delivery, 7-day exchange, alterations and UPI/card payment are localised
-copy, not listing data — **confirm before this goes live.**
+JSON-LD `ClothingStore` + OG tags preserved. Hours/GSTIN omitted (not on listing). Maps links use `maps/dir` + `maps/search` (no tracking params). Prices in `₹`.
 
-Maps links use the clean Maps URL API (`maps/dir`, `maps/search`) rather than the tracking-laden
-`sca_esv`/`ved` URLs, and `lang="en-IN"` + `og:locale=en_IN` are set.
+---
 
 ## Run it
 
-```sh
-python3 -m http.server 4173 --bind 0.0.0.0
-# → http://localhost:4173/index.html
+```bash
+npm install
+npm run dev     # → http://localhost:5173  (host 0.0.0.0, allowedHosts: true for preview)
+npm run build
+npm run preview # → http://localhost:4173
 ```
 
-`index.html` is fully self-contained (it can also be opened straight from disk), but it pulls
-three things off the network: Google Fonts (Archivo), the Tailwind CDN (utility fallback only)
-and the brand's imagery from jsDelivr.
+Images via `jsDelivr` (`VanhDc/aura-assets@sable-v2`), Fonts via Google Fonts (Archivo). No `node_modules` in git.
+
+### Dev server for Arena preview
+
+`vite.config.js` sets `server.host: '0.0.0.0'`, `allowedHosts: true`, `cors: true`, `X-Frame-Options: ALLOWALL` so the preview at `https://5173-…e2b.app` loads.
+
+---
 
 ## Stack
 
 | Piece | Note |
-| --- | --- |
-| HTML | one file: `index.html` — markup, styles and behaviour |
-| Identity | wordmark as two stacked lines (Trendy / Attire); inline SVG favicon; `ClothingStore` JSON-LD |
-| CSS | custom properties + `clamp()`; Tailwind via CDN, `preflight` disabled so it cannot fight the authored CSS |
-| JS | vanilla, no libraries |
+|---|---|
+| React 19 + Vite 8 | `src/main.jsx` → `App.jsx`, JSX, no TS |
+| CSS | one file `src/index.css`, mobile-first, `clamp()` + custom props, no Tailwind CDN |
 | Type | Archivo 400–900 |
-| Media | `VanhDc/aura-assets@sable-v2/sable/img/*` via jsDelivr, rendered `grayscale(1)` with per-section contrast (1.04–1.08) |
+| Media | jsDelivr grayscale with per-section contrast |
+| Motion | rAF loop (progress/parallax/scrub/reveal) + `IntersectionObserver`; hero stagger 140ms, `cubic-bezier(.19,1,.22,1)` count-ups |
 
 ## Design tokens
 
 ```
---bone #EFEDE8   --ink #101010   --mid #8A8781   --line rgba(16,16,16,.14)
---nav rgba(239,237,232,.9)       --gut clamp(18px,3.4vw,44px)      --max 1440px
+--bone #EFEDE8  --ink #101010  --mid #8A8781  --line rgba(16,16,16,.14)
+--nav rgba(239,237,232,.92)  --gut clamp(18px,4.2vw,44px)  --max 1440px  --nav-h 74→96px
 ```
 
 ## Sections
 
-Ticker → sticky nav → `#hero` → `#cats` → `#season` → `#svc` → `#shop` → `#look`
-→ `#cloth` → `#atelier` → `#signup` → footer.
+Ticker → sticky nav + prog → `#hero` → `#cats` → `#season` → `#svc` → `#shop` → `#look` → `#cloth` → `#atelier` → `#signup` → footer + bag drawer + toaster.
 
-The hero wordmark stacks as `Trendy` over `Attiere` and sits **behind** the transparent model
-cutout (z-1 vs z-2), so the letters read through the gaps in the silhouette; the corner labels (z-4) are anchored to the padded
-content column, not the viewport edge.
+## Notes on responsiveness testing
 
-## Motion system
+- Tested at 320, 375, 414, 768, 1024, 1440 widths; iOS safe-area, Android back-gesture, `hover:none` devices show Add-to-bag by default.
+- Every interactive element ≥44px, wraps without horizontal scroll, and provides `:active` feedback.
+- `prefers-reduced-motion` and `<noscript>` fully static.
 
-A single `requestAnimationFrame`-batched scroll handler drives all four effects, so there is
-exactly one scroll listener on the page:
-
-- **progress** — `#prog` scaleX under the nav, keyed to total page depth
-- **parallax** — any `[data-speed]` element; offset is proportional to its distance from the
-  viewport centre (`--ty`), optional `[data-scale]` for the hero model (`--sc`)
-- **lookbook scrub** — `[data-scrub]` writes `--p` from 0→1 as the frame crosses from the
-  bottom quarter to the vertical middle; CSS turns `--p` into `clip-path: inset()` + scale
-- **reveals** — `.rv` fade/rise with a 70ms staggered delay via IntersectionObserver, *plus* a
-  manual rect sweep, because elements already above the fold never fire an intersection crossing
-
-Load-in sequence on the hero staggers 140ms per piece (kicker → wordmark → model → corner
-labels → CTAs). Stats count up with a hand-rolled `cubic-bezier(.19,1,.22,1)` solver; the
-`#cloth` video only gets its `src` once it scrolls into view (`preload="none"` + poster).
-
-`prefers-reduced-motion: reduce` removes the ticker loop, parallax, scrub, reveals, count-ups
-and video autoplay — the page paints in its final state, product buttons stay visible, and a
-`<noscript>` block covers the no-JS case too. Hover-only affordances (add-to-bag, image zoom,
-underline wipes) are wrapped in `@media (hover:hover)`, so touch devices get the static state.
-
-## Notes
-
-- Nav links and the Search / Account / Bag labels collapse below 900px; the wordmark and the
-  live bag counter stay.
-- Shop grid is a strict 4 → 2 column shift; category strip 3 → 2 → 1.
-- Placeholder `href="#"` links are intercepted so they never jump to the top.
-- Fav buttons use `aria-pressed`; bag additions announce through a polite live region.
+Original vanilla build archived as `index.legacy.html`.
